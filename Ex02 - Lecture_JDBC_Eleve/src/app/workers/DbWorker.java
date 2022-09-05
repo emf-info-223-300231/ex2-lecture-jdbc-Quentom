@@ -19,7 +19,7 @@ public class DbWorker implements DbWorkerItf {
     /**
      * Constructeur du worker
      */
-    public DbWorker() {      
+    public DbWorker() {
     }
 
     @Override
@@ -82,27 +82,27 @@ public class DbWorker implements DbWorkerItf {
                 String nom = rs.getString("Nom");
                 String prenom = rs.getString("Prenom");
                 Personne personne = new Personne(nom, prenom);
-                listePersonnes.add(personne);                
-            }          
+                listePersonnes.add(personne);
+            }
         } catch (SQLException ex) {
-
+            throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
         }
-        
+
         return listePersonnes;
     }
 
     @Override
     public Personne precedentPersonne() throws MyDBException {
-       if (listePersonnes == null) {
+        if (listePersonnes == null) {
             lirePersonnes();
         }
         Personne result;
-        index = index-1;
-        if (index < 0) {
-            index = index +1;
+        index = index - 1;
+        if (index <= -1) {
+            index = index + 1;
             result = listePersonnes.get(index);
-        }    
-        result = listePersonnes.get(index);      
+        }
+        result = listePersonnes.get(index);
         return result;
 
     }
@@ -111,11 +111,11 @@ public class DbWorker implements DbWorkerItf {
     public Personne suivantPersonne() throws MyDBException {
         if (listePersonnes == null) {
             lirePersonnes();
-        }        
+        }
         Personne result;
-        index = index+1;
-        if (index > listePersonnes.size()) {
-            index = index-1;
+        index = index + 1;
+        if (index >= listePersonnes.size()) {
+            index = index - 1;
             result = listePersonnes.get(index);
         }
         result = listePersonnes.get(index);
