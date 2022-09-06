@@ -28,7 +28,7 @@ public class MainCtrl implements Initializable {
     };
 
     // DB par défaut
-    final static private TypesDB DB_TYPE = TypesDB.ACCESS;
+    final static private TypesDB DB_TYPE = TypesDB.MYSQL;
 
     private DbWorkerItf dbWrk;
 
@@ -49,15 +49,13 @@ public class MainCtrl implements Initializable {
     @FXML
     public void actionPrevious(ActionEvent event) throws MyDBException {
         Personne personnes = dbWrk.precedentPersonne();
-        txtNom.setText(personnes.getNom());
-        txtPrenom.setText(personnes.getPrenom());
+        afficherPersonne(personnes);
     }
 
     @FXML
     public void actionNext(ActionEvent event) throws MyDBException {
         Personne personnes = dbWrk.suivantPersonne();
-        txtNom.setText(personnes.getNom());
-        txtPrenom.setText(personnes.getPrenom());
+        afficherPersonne(personnes);
     }
 
     public void quitter() {
@@ -73,6 +71,10 @@ public class MainCtrl implements Initializable {
    * METHODES PRIVEES 
      */
     private void afficherPersonne(Personne p) {
+        if (p != null) {
+            txtNom.setText(p.getNom());
+            txtPrenom.setText(p.getPrenom());
+        }
 
     }
 
